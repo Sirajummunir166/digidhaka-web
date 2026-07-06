@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Horizon Summit 2024 — DigiDhaka Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{--red:#E8302A;--black:#111111;--white:#FFFFFF;--off:#F6F5F2;--line:rgba(0,0,0,0.08);}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'DM Sans',sans-serif;background:var(--white);color:var(--black);overflow-x:hidden;cursor:none;}
+  .cursor{position:fixed;width:10px;height:10px;background:var(--red);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width 0.2s,height 0.2s;}
+  .cursor-ring{position:fixed;width:36px;height:36px;border:1.5px solid rgba(232,48,42,0.4);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:transform 0.15s ease-out;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 64px;height:72px;background:rgba(255,255,255,0.94);backdrop-filter:blur(24px);border-bottom:1px solid var(--line);}
+  .nav-logo{display:flex;align-items:center;text-decoration:none;}.logo-img{height:42px;width:auto;display:block;}
+  .nav-links{display:flex;align-items:center;gap:36px;list-style:none;}
+  .nav-links a{font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(0,0,0,0.45);text-decoration:none;font-family:'Space Mono',monospace;transition:color 0.2s;}
+  .nav-links a:hover{color:var(--black);}
+  .nav-cta{background:var(--red);color:var(--white);border:none;padding:10px 22px;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;font-family:'Space Mono',monospace;cursor:none;text-decoration:none;border-radius:6px;}
+  .nav-hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:none;padding:4px;}
+  .nav-hamburger span{display:block;width:22px;height:2px;background:var(--black);border-radius:2px;}
+  .nav-mobile-overlay{display:none;position:fixed;inset:0;background:var(--white);z-index:99;flex-direction:column;align-items:center;justify-content:center;gap:32px;padding-top:72px;}
+  .nav-mobile-overlay.open{display:flex;}.nav-mobile-overlay .nav-links{flex-direction:column;align-items:center;gap:24px;}
+  .nav-mobile-overlay .nav-links a{font-size:16px;}
+  .project-hero{position:relative;height:75vh;min-height:480px;overflow:hidden;}
+  .project-hero img{width:100%;height:100%;object-fit:cover;display:block;}
+  .project-hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.1) 60%,transparent 100%);}
+  .project-hero-content{position:absolute;bottom:56px;left:64px;right:64px;}
+  .project-back{display:inline-flex;align-items:center;gap:8px;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.5);text-decoration:none;margin-bottom:24px;transition:color 0.2s;}
+  .project-back:hover{color:var(--white);}
+  .project-tag{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--red);background:rgba(0,0,0,0.5);padding:5px 12px;border-radius:100px;display:inline-block;margin-bottom:16px;}
+  .project-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,7vw,96px);color:var(--white);line-height:0.95;}
+  .project-meta-bar{padding:0 64px;background:var(--black);display:flex;gap:0;border-bottom:1px solid rgba(255,255,255,0.06);overflow-x:auto;}
+  .meta-item{padding:28px 48px 28px 0;min-width:140px;}.meta-item:first-child{padding-left:0;}
+  .meta-label{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:6px;}
+  .meta-value{font-size:15px;color:var(--white);font-weight:500;}
+  .project-body{padding:96px 64px;display:grid;grid-template-columns:1fr 360px;gap:80px;align-items:start;max-width:1280px;margin:0 auto;}
+  .project-overview h2{font-family:'Bebas Neue',sans-serif;font-size:48px;margin-bottom:24px;line-height:1;}
+  .project-overview p{font-size:17px;color:rgba(0,0,0,0.6);line-height:1.8;margin-bottom:20px;font-weight:300;}
+  .project-sidebar{padding:40px;background:var(--off);border-radius:12px;}
+  .sidebar-title{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--red);margin-bottom:24px;}
+  .sidebar-item{padding:16px 0;border-bottom:1px solid var(--line);}.sidebar-item:last-child{border-bottom:none;}
+  .sidebar-item-label{font-size:11px;color:rgba(0,0,0,0.4);text-transform:uppercase;letter-spacing:1px;font-family:'Space Mono',monospace;margin-bottom:4px;}
+  .sidebar-item-value{font-size:15px;font-weight:500;}
+  .project-gallery{padding:0 64px 96px;}
+  .gallery-eyebrow{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--red);margin-bottom:12px;}
+  .gallery-title{font-family:'Bebas Neue',sans-serif;font-size:48px;margin-bottom:48px;}
+  .gallery-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
+  .gallery-img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:4px;display:block;}
+  .project-nav{background:var(--off);padding:64px;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;border-top:1px solid var(--line);}
+  .proj-nav-link{text-decoration:none;}
+  .proj-nav-label{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(0,0,0,0.35);margin-bottom:8px;}
+  .proj-nav-title{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--black);transition:color 0.2s;}
+  .proj-nav-link:hover .proj-nav-title{color:var(--red);}
+  .all-works{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(0,0,0,0.45);text-decoration:none;border:1.5px solid rgba(0,0,0,0.15);padding:12px 24px;border-radius:8px;transition:all 0.2s;}
+  .all-works:hover{border-color:var(--black);color:var(--black);}
+  footer{background:var(--black);padding:48px 64px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;}
+  .footer-copy{font-size:12px;color:rgba(255,255,255,0.25);font-family:'Space Mono',monospace;}
+  @media(max-width:900px){nav{padding:0 24px;}.nav-links,.nav-cta{display:none;}.nav-hamburger{display:flex;}
+    .project-hero-content{left:24px;right:24px;bottom:32px;}.project-meta-bar{padding:0 24px;}
+    .project-body{padding:48px 24px;grid-template-columns:1fr;gap:40px;}
+    .project-gallery{padding:0 24px 64px;}.gallery-grid{grid-template-columns:1fr;}
+    .project-nav{padding:40px 24px;}footer{padding:40px 24px;flex-direction:column;align-items:flex-start;}}
+</style>
+</head>
+<body>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<nav>
+  <a href="/" class="nav-logo"><img src="/Digidhaka-new-logo-.png" alt="Digidhaka" class="logo-img"></a>
+  <ul class="nav-links">
+    <li><a href="/work/">Work</a></li><li><a href="/#services">Services</a></li>
+    <li><a href="/#approach">Approach</a></li><li><a href="/#about">About</a></li>
+  </ul>
+  <a href="/#contact" class="nav-cta">Let's Talk</a>
+  <button class="nav-hamburger" id="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+</nav>
+<div class="nav-mobile-overlay" id="mobileNav">
+  <ul class="nav-links">
+    <li><a href="/work/" class="mobile-link">Work</a></li><li><a href="/#services" class="mobile-link">Services</a></li>
+    <li><a href="/#approach" class="mobile-link">Approach</a></li><li><a href="/#about" class="mobile-link">About</a></li>
+  </ul>
+  <a href="/#contact" class="nav-cta mobile-link">Let's Talk</a>
+</div>
+<div class="project-hero">
+  <img src="/images/work/horizon-summit-2024-cover.png" alt="Horizon Summit 2024">
+  <div class="project-hero-overlay"></div>
+  <div class="project-hero-content">
+    <a href="/work/" class="project-back">← All Projects</a>
+    <div><span class="project-tag">Event Management</span></div>
+    <h1 class="project-title">Horizon Summit 2024</h1>
+  </div>
+</div>
+<div class="project-meta-bar">
+  <div class="meta-item"><div class="meta-label">Client</div><div class="meta-value">Horizon Group</div></div>
+  <div class="meta-item"><div class="meta-label">Category</div><div class="meta-value">Event Management</div></div>
+  <div class="meta-item"><div class="meta-label">Year</div><div class="meta-value">2024</div></div>
+  <div class="meta-item"><div class="meta-label">Scope</div><div class="meta-value">Full Production</div></div>
+</div>
+<div class="project-body">
+  <div class="project-overview">
+    <h2>Project Overview</h2>
+    <p>Horizon Summit 2024 was a flagship corporate summit produced by DigiDhaka for Horizon Group. The event brought together industry leaders, decision-makers, and innovators under one roof for a day of keynotes, panels, and networking.</p>
+    <p>DigiDhaka managed the complete event lifecycle — venue coordination, stage and AV setup, speaker management, branding, and live content capture — ensuring every touchpoint delivered a world-class experience.</p>
+    <p>The summit reinforced Horizon Group's position as a thought leader in their industry, with post-event coverage amplifying reach far beyond the 2,000+ attendees in the room.</p>
+  </div>
+  <div class="project-sidebar">
+    <div class="sidebar-title">Project Details</div>
+    <div class="sidebar-item"><div class="sidebar-item-label">Client</div><div class="sidebar-item-value">Horizon Group</div></div>
+    <div class="sidebar-item"><div class="sidebar-item-label">Scope</div><div class="sidebar-item-value">Full Event Production</div></div>
+    <div class="sidebar-item"><div class="sidebar-item-label">Year</div><div class="sidebar-item-value">2024</div></div>
+    <div class="sidebar-item"><div class="sidebar-item-label">Deliverables</div><div class="sidebar-item-value">Event Design, AV, Content</div></div>
+  </div>
+</div>
+<div class="project-gallery">
+  <div class="gallery-eyebrow">Project Gallery</div>
+  <h2 class="gallery-title">Summit Highlights</h2>
+  <div class="gallery-grid">
+    <img src="/images/work/horizon-summit-2024-gallery-1.png" alt="Horizon Summit 2024" class="gallery-img" loading="lazy">
+    <img src="/images/work/horizon-summit-2024-gallery-2.png" alt="Horizon Summit 2024" class="gallery-img" loading="lazy">
+  </div>
+</div>
+<div class="project-nav">
+  <a href="/work/nexashop-platform/" class="proj-nav-link">
+    <div class="proj-nav-label">Next Project →</div>
+    <div class="proj-nav-title">NexaShop Platform</div>
+  </a>
+  <a href="/work/" class="all-works">All Projects</a>
+  <a href="/work/apex-group-rebrand/" class="proj-nav-link" style="text-align:right">
+    <div class="proj-nav-label">← Previous Project</div>
+    <div class="proj-nav-title">Apex Group Rebrand</div>
+  </a>
+</div>
+<footer>
+  <div><img src="/Digidhaka-new-logo-.png" alt="Digidhaka" style="height:32px;opacity:0.6"></div>
+  <span class="footer-copy">© 2025 DigiDhaka Communication Limited</span>
+</footer>
+<script>
+  const c=document.getElementById('cursor'),r=document.getElementById('cursorRing');
+  document.addEventListener('mousemove',e=>{c.style.left=e.clientX+'px';c.style.top=e.clientY+'px';r.style.left=e.clientX+'px';r.style.top=e.clientY+'px';});
+  document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('mouseenter',()=>{c.style.width='18px';c.style.height='18px';});el.addEventListener('mouseleave',()=>{c.style.width='10px';c.style.height='10px';});});
+  document.getElementById('hamburger').addEventListener('click',()=>document.getElementById('mobileNav').classList.toggle('open'));
+  document.querySelectorAll('.mobile-link').forEach(l=>l.addEventListener('click',()=>document.getElementById('mobileNav').classList.remove('open')));
+</script>
+</body>
+</html>
